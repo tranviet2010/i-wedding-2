@@ -1,0 +1,51 @@
+# Build stage
+FROM node:20-alpine as build
+
+WORKDIR /app
+
+# Set Node.js memory limit to prevent heap out of memory errors
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Copy package files
+COPY package.json pnpm-lock.yaml* ./
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application for SEO (standard CSR build)
+RUN pnpm run build:seo
+
+# Production stage
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install pnpm in production stage
+RUN npm install -g pnpm
+
+# Copy package files for production dependencies
+COPY package.json pnpm-lock.yaml* ./
+
+# Install only production dependencies
+RUN pnpm install --frozen-lockfile --prod
+
+# Copy built assets from build stage
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/server-seo.js ./
+COPY --from=build /app/index.html ./
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV SEO_PORT=5175
+
+# Expose the SEO port
+EXPOSE 5175
+
+# Start the SEO server
+CMD ["node", "server-seo.js"]

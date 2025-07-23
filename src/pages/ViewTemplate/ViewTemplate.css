@@ -1,0 +1,90 @@
+.view-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* For the particles background */
+#tsparticles-falling-images {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10000; /* Keep original value as this is for particle effects */
+  pointer-events: none;
+}
+
+/* Hide any editor controls that might still be visible */
+.view-page [data-cy="craftjs-renderer"] {
+  pointer-events: none !important;
+}
+
+.view-page [data-cy="craftjs-renderer"] * {
+  pointer-events: auto !important;
+}
+
+/* Button elements should still be clickable in view mode */
+.view-page button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Hide all editor UI elements */
+.view-page .node-controls,
+.view-page .sidebar,
+.view-page [class*="toolbar"],
+.view-page [class*="layers-panel"],
+.view-page .middle-alignment-guides,
+.view-page .safe-area-borders {
+  display: none !important;
+}
+
+/* Hide all drag handles and resize controls */
+.view-page [style*="cursor: grab"],
+.view-page [style*="cursor: ns-resize"],
+.view-page [style*="cursor: move"] {
+  display: none !important;
+}
+
+/* Remove all selection outlines */
+.view-page * {
+  outline: none !important;
+  user-select: text !important;
+}
+
+.view-page .craftjs-renderer {
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Audio player styles */
+.view-page .audio-player {
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 24px !important;
+  z-index: 10001 !important; /* Keep original value for audio player in view mode */
+  pointer-events: auto !important;
+}
+
+/* Ensure audio player is always visible and interactive */
+.view-page .audio-player * {
+  pointer-events: auto !important;
+}
+
+/* Add some breathing room for the audio player */
+/* .view-page {
+  padding-bottom: 100px;
+} */
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .view-page .audio-player {
+    bottom: 16px !important;
+    left: 16px !important;
+    transform: scale(0.9);
+  }
+
+}

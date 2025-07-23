@@ -1,0 +1,17 @@
+import Hamburger from './icons/hamburger.svg?react'
+import ArrowRight from './icons/arrow-right.svg?react'
+import ArrowLeft from './icons/arrow-left.svg?react'
+import Battery from './icons/battery.svg?react'
+import Crown from './icons/crown.svg?react'
+import LinkIn from './icons/link-in.svg?react'
+import Medal from './icons/medal.svg?react'
+import Pen from './icons/pen.svg?react'
+import Sheild from './icons/sheild.svg?react'
+import Social from './icons/social.svg?react'
+import Step from './icons/step.svg?react'
+import Telegram from './icons/telegram.svg?react'
+import X from './icons/x.svg?react'
+import ArrowDown from './icons/arrow-down.svg?react'
+import Logo from './icons/logo.svg?react'
+
+export { Hamburger, ArrowRight, ArrowLeft, Battery, Crown, LinkIn, Medal, Pen, Sheild, Social, Step, Telegram, X, ArrowDown, Logo }

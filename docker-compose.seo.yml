@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # CSR service for admin/editor functionality
+  mewedding-editor-csr:
+    image: mehappy-fe:latest
+    container_name: mewedding-editor-csr
+    ports:
+      - "8281:80"  # CSR on port 8281
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - mewedding-network
+
+  # SEO service for domain lookup (SEO meta tags only, then CSR)
+  mewedding-editor-seo:
+    build:
+      context: .
+      dockerfile: Dockerfile.seo
+    image: mehappy-fe-seo:latest
+    container_name: mewedding-editor-seo
+    ports:
+      - "8282:5175"  # SEO on port 8282
+    environment:
+      - NODE_ENV=production
+      - SEO_PORT=5175
+      - API_URL=https://api.mehappy.vn/api  # Use host.docker.internal for API access
+    restart: unless-stopped
+    networks:
+      - mewedding-network
+    depends_on:
+      - mewedding-editor-csr
+
+networks:
+  mewedding-network:
+    driver: bridge
