@@ -153,9 +153,9 @@ const CreateFreeCardsChosenSection = () => {
       <Box
         id="question-id"
         className="grid gap-4 
-                grid-cols-1 grid-rows-2 
-                md:grid-cols-2 md:grid-rows-1 mt-20 mb-10">
-        <Box className="col-span-2 md:col-span-1  p-4 text-center flex flex-col">
+                grid-cols-1 md:grid-cols-12  
+                mt-20 mb-10">
+        <Box className="col-span-12 md:col-span-7 p-4 text-center flex flex-col">
           <Text
             style={{
               color: "rgb(232, 117, 117)",
@@ -222,7 +222,7 @@ const CreateFreeCardsChosenSection = () => {
                   backgroundColor: "rgb(255, 226, 226)",
                 }}
                 className="text-left cursor-pointer px-8 py-3 flex justify-between items-center">
-                <Text fontWeight={"semibold"} className="max-w-[400px]">
+                <Text fontWeight={"semibold"} className="max-w-[500px]">
                   Tôi cần chuẩn bị những gì để bắt đầu có 1 chiếc thiệp cưới ?
                 </Text>
                 {open2 ? <LuMinus /> : <LuPlus />}
@@ -379,7 +379,7 @@ const CreateFreeCardsChosenSection = () => {
             </Collapsible.Content>
           </Collapsible.Root>
         </Box>
-        <Box className="col-span-2 md:col-span-1  p-4 text-center">
+        <Box className="col-span-12 md:col-span-5 p-4 text-center">
           <Image src="/anh3.png" />
         </Box>
       </Box>
