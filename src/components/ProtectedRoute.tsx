@@ -15,14 +15,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const hasTokenInUrl = params.has("token");
   const rejectUrl = params.get("rejectUrl");
   // If no auth and no token in URL, redirect to login
-  if (!auth && !hasTokenInUrl) {
+  // if (!auth && !hasTokenInUrl) {
     // Redirect to login page but save the attempted url
     return (
       <Navigate to="/tao-thiep-mien-phi" state={{ from: location }} replace />
     );
-  }
+  // }
 
-  return <div>{children}</div>;
+  // return <div>{children}</div>;
 };
 
 export default ProtectedRoute;

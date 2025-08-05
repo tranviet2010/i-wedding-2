@@ -10,6 +10,7 @@ import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@ta
 import { toaster } from './components/ui/toaster'
 import { HelmetProvider } from 'react-helmet-async'
 import { injectStore } from './api/apiClient'
+import { Toaster } from "./components/ui/toaster"; 
 
 // Inject store for API client
 injectStore(store)
@@ -42,6 +43,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
             <App />
+            <Toaster /> 
           </QueryClientProvider>
         </Provider>
       </ChakraProvider>

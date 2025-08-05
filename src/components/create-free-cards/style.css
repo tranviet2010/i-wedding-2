@@ -1,0 +1,34 @@
+.shiny-text {
+  position: relative;
+  color: #000; /* chữ đen */
+  display: inline-block;
+  font-weight: 800;
+  overflow: hidden;
+}
+
+.shiny-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  height: 100%;
+  width: 75%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shineOverlay 3s ease-in-out infinite;
+  pointer-events: none;
+}
+  
+@keyframes shineOverlay {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 130%;
+  }
+}

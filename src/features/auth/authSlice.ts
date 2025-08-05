@@ -52,7 +52,7 @@ const authSlice = createSlice({
   
 });
 
-export const { signIn, signOut, setWallet, setNonce } = authSlice.actions;
+export const { signIn, signOut, setWallet, setNonce, setLoading } = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth.auth;
 export const selectLoading = (state: RootState) => state.auth.loading;
 export const selectError = (state: RootState) => state.auth.error;

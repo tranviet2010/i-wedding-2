@@ -8,8 +8,39 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+
+import "./style.css";
+
+const shinyWords = ["ĐIỆN TỬ", "ONLINE"];
 
 const CreateFreeCardsBannerSection = () => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [currentWord, setCurrentWord] = useState("");
+
+  useEffect(() => {
+    let timeout: any;
+    const fullWord = shinyWords[wordIndex];
+    let charIndex = 0;
+
+    const typeChar = () => {
+      if (charIndex <= fullWord.length) {
+        setCurrentWord(fullWord.slice(0, charIndex));
+        charIndex++;
+        timeout = setTimeout(typeChar, 150); // tốc độ gõ
+      } else {
+        // Sau khi gõ xong từ hiện tại → chờ rồi gõ từ mới
+        timeout = setTimeout(() => {
+          setWordIndex((prev) => (prev + 1) % shinyWords.length);
+        }, 5000); // Giữ nguyên 3s rồi chuyển
+      }
+    };
+
+    typeChar(); // bắt đầu gõ khi wordIndex thay đổi
+
+    return () => clearTimeout(timeout);
+  }, [wordIndex]);
+
   const handleScrollToCard = () => {
     const e = document.getElementById("card-id");
     if (e) {
@@ -25,13 +56,15 @@ const CreateFreeCardsBannerSection = () => {
         height="100%"
         preserveAspectRatio="none"
         viewBox="0 0 948.8 291.9"
-        fill='url("#SHAPE6_desktop_gradient")'>
+        fill='url("#SHAPE6_desktop_gradient")'
+      >
         <defs id="SHAPE6_defs">
           <radialGradient
             id="SHAPE6_desktop_gradient"
-            gradientTransform="rotate(0)">
-            <stop offset="0%" stop-color="#FFFFFF"></stop>
-            <stop offset="100%" stop-color="#FFF3F3"></stop>
+            gradientTransform="rotate(0)"
+          >
+            <stop offset="0%" stopColor="#FFFFFF"></stop>
+            <stop offset="100%" stopColor="#FFF3F3"></stop>
           </radialGradient>
         </defs>
         <defs>
@@ -40,15 +73,18 @@ const CreateFreeCardsBannerSection = () => {
         <path
           className="cls-1 shape_dTwYcPWnKq"
           d="M572.4,291.4H360.6a213.7,213.7,0,0,1-157.3-68.8L.2,1.8H934L729.3,223A213.7,213.7,0,0,1,572.4,291.4Z"
-          transform="translate(-0.2 0.5)"></path>
+          transform="translate(-0.2 0.5)"
+        ></path>
         <path
           className="cls-2 shape_dTwYcPWnKq"
           d="M572.4,286.1H360.6c-59.8,0-116.9-24.5-157.3-67.6L.2,1.8H934L729.3,219C688.9,261.8,632.1,286.1,572.4,286.1Z"
-          transform="translate(-0.2 0.5)"></path>
+          transform="translate(-0.2 0.5)"
+        ></path>
         <path
           className="cls-3 shape_dTwYcPWnKq"
           d="M581.6,283.1H366.4c-60.8,0-118.8-24.5-159.8-67.4L.2-.5H949L741,216.1C700,258.8,642.2,283.1,581.6,283.1Z"
-          transform="translate(-0.2 0.5)"></path>
+          transform="translate(-0.2 0.5)"
+        ></path>
       </svg>
       <Container>
         <Box py={12}>
@@ -56,17 +92,20 @@ const CreateFreeCardsBannerSection = () => {
             mx="auto"
             direction={{ base: "column", md: "row" }}
             align="center"
-            justify="space-between">
+            justify="space-between"
+          >
             <Box
               flex={1}
-              className="min-w-[600px] text-center md:text-left flex justify-center flex-col items-center">
+              className="min-w-[600px] text-center md:text-left flex justify-center flex-col items-center"
+            >
               <Text
                 className=" font-semibold text-lg mb-2"
                 style={{
                   fontSize: "26px",
                   color: "rgb(251, 65, 65)",
                   fontFamily: "Play, sans-serif",
-                }}>
+                }}
+              >
                 MỜI CƯỚI THỜI 5.0
               </Text>
               {/* <br /> */}
@@ -74,14 +113,16 @@ const CreateFreeCardsBannerSection = () => {
                 style={{
                   fontFamily: '"Paytone One", sans-serif',
                 }}
-                className="font-extrabold text-gray-900 leading-tight text-[30px] md:text-[55px]">
-                TẠO THIỆP CƯỚI ĐIỆN TỬ
+                className=" shiny-text font-extrabold text-gray-900 leading-tight text-[30px] md:text-[55px]"
+              >
+                TẠO THIỆP CƯỚI <span>{currentWord}</span>
               </p>
               <p
                 className="text-red-500 text-[28px] md:text-[50px]"
                 style={{
                   fontFamily: '"Paytone One", sans-serif',
-                }}>
+                }}
+              >
                 HOÀN TOÀN MIỄN PHÍ
               </p>
 
@@ -89,7 +130,8 @@ const CreateFreeCardsBannerSection = () => {
                 className="mt-4 text-xl text-gray-700 text-center text-[20px] md:text-[30px]"
                 style={{
                   fontFamily: "Quicksand, sans-serif",
-                }}>
+                }}
+              >
                 Cho Đám Cưới của bạn trở nên
                 <br />
                 <span className="text-red-400 font-medium">
@@ -98,36 +140,37 @@ const CreateFreeCardsBannerSection = () => {
                 <span className="text-red-400 font-medium">Đáng Nhớ</span> hơn ♥
               </Text>
 
+              {/* Nút hiển thị trên desktop */}
               <Stack
+                display={{ base: "none", md: "flex" }}
                 mt={6}
-                direction={{ base: "column", sm: "row" }}
-                justify={{ base: "center", md: "flex-start" }}
-                gap={{ base: 3, sm: 5, md: 10 }}
+                direction="row"
+                justify="flex-start"
+                gap={5}
               >
-
                 <Button
                   onClick={handleScrollToCard}
-                  flex="1"
                   bg="red.500"
                   color="white"
                   borderRadius="full"
-                  width={{ base: "100%", sm: "150px", md: "200px" }}
-                  height={{ base: 5, sm: 9, md: 10 }}
+                  width="200px"
+                  height="40px"
                   fontWeight="bold"
-                  _hover={{ bg: "red.600" }}>
+                  _hover={{ bg: "red.600" }}
+                >
                   TẠO THIỆP NGAY
                 </Button>
                 <Button
                   onClick={handleScrollToCard}
                   variant="outline"
                   bg="white"
+                  color="red.500"
                   borderRadius="full"
-                  colorScheme="red"
                   fontWeight="bold"
-                  width={{ base: "100%", sm: "250px", md: "200px" }}
-                  height={{ base: 5, sm: 9, md: 10 }}
-                  borderColor={"red.400"}
-                  flex="1">
+                  width="200px"
+                  height="40px"
+                  borderColor="red.400"
+                >
                   XEM CÁC MẪU THIỆP
                 </Button>
               </Stack>
@@ -135,7 +178,10 @@ const CreateFreeCardsBannerSection = () => {
 
             <Box
               position="relative"
-              className=" flex justify-center items-center  md:min-w-[660px]">
+              className="flex justify-center items-center md:min-w-[660px]"
+              flexDirection="column"
+              // w="100%"
+            >
               <Image
                 src="/anh1.png"
                 alt="Laptop"
@@ -144,15 +190,53 @@ const CreateFreeCardsBannerSection = () => {
               <Image
                 src="/happy-wedding.png"
                 alt="Phone"
-                className="absolute left-[15%] md:left-[100px] w-[160px] h-[62px] top-[40px] md:w-[265px] md:h-[97px]"
+                className="absolute right-1/2 translate-x-[40%] top-[70px] md:left-[150px] md:translate-x-0 w-[120px] h-[45px] md:w-[265px] md:h-[97px] md:top-[40px]"
               />
+
+              {/* Nút hiển thị trên mobile, dưới ảnh */}
+              <Stack
+                display={{ base: "flex", md: "none" }}
+                direction="row"
+                justify="center"
+                gap={3}
+                // mt={4}
+                px={5}
+                w="100%"
+              >
+                <Button
+                  onClick={handleScrollToCard}
+                  flex="1"
+                  bg="red.500"
+                  color="white"
+                  fontSize="sm"
+                  borderRadius="full"
+                  fontWeight="bold"
+                  _hover={{ bg: "red.600" }}
+                >
+                  TẠO THIỆP NGAY
+                </Button>
+                <Button
+                  onClick={handleScrollToCard}
+                  flex="1"
+                  variant="outline"
+                  bg="white"
+                  fontSize="sm"
+                  color="red.500"
+                  borderRadius="full"
+                  fontWeight="bold"
+                  borderColor="red.400"
+                >
+                  XEM CÁC MẪU THIỆP
+                </Button>
+              </Stack>
             </Box>
           </Flex>
         </Box>
 
         <Container
           maxW={"6xl"}
-          className="flex items-center justify-center flex-wrap flex-col-reverse md:flex-row md:flex-nowrap">
+          className="flex items-center justify-center flex-wrap flex-col-reverse md:flex-row md:flex-nowrap"
+        >
           <Image src="/clip.webp" width={"348px"} height={"600px"} />
           <Box
             bg="#f8f8f8"
@@ -160,31 +244,32 @@ const CreateFreeCardsBannerSection = () => {
             rounded="xl"
             maxW="600px"
             w="100%"
-            // textAlign="center" // 👈 căn giữa toàn bộ chữ
             p={{ base: 4, md: 6 }}
-            ml={{ md: -10 }} // tương đương md:ml-[-40px]>
+            ml={{ md: -10 }}
             borderTop="4px solid #f8f8f8"
             borderBottom="4px solid #f8f8f8"
             borderRight="4px solid #f8f8f8"
-            // Border radius responsive
-            borderRadius={{ base: '20px', md: '0 20px 20px 0' }}
+            borderRadius={{ base: "20px", md: "0 20px 20px 0" }}
           >
             <Text
               className="font-bold text-[#f35151] mb-2 transform transition-transform duration-300"
               fontSize="16px"
               color={"rgb(230, 128, 128)"}
+              textAlign={{ base: "center", md: "left" }}
               fontFamily={'"Montserrat", sans-serif'}
-              >
+            >
               Giới thiệu
             </Text>
 
             <Heading
               as="h2"
               className="text-[#f35151] font-bold transform transition-transform duration-300"
-              fontSize={{ base: "xl", md: "2xl" }}
-              fontFamily={'Quicksand, sans-serif'}
+              fontSize={{ base: "17px", md: "2xl" }}
+              fontFamily={"Quicksand, sans-serif"}
+              textAlign={{ base: "center", md: "left" }}
               color={"rgb(255, 92, 92)"}
-              mb={4}>
+              mb={4}
+            >
               Website Đám Cưới - Thiệp cưới Online
             </Heading>
 
@@ -195,7 +280,7 @@ const CreateFreeCardsBannerSection = () => {
               textAlign="justify"
               className="transform transition-transform duration-300"
               fontFamily={'"Quicksand", sans-serif'}
-              >
+            >
               Thiệp cưới online, Thiệp cưới điện tử, Website đám cưới là 1 trang
               web dành riêng cho đám cưới của các cặp đôi. Nơi dùng để lưu trữ
               những khoảnh khắc, kỷ niệm, hình ảnh, video cưới 1 cách mãi mãi.
